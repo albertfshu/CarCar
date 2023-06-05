@@ -22,7 +22,7 @@ class Technician(models.Model):
 class Appointment(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
     reason = models.CharField(max_length=200)
-    status = models.BooleanField()
+    status = models.BooleanField(null=True)
     vin = models.CharField(max_length=50)
     customer = models.CharField(max_length=150)
 

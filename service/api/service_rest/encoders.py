@@ -39,5 +39,5 @@ class AppointmentListEncoder(ModelEncoder):
         "technician": TechnicianDetailEncoder(),
     }
 
-    def get_extra_data(self.o):
-        return ("technician": o.technician.vin)
+    def get_extra_data(self, o):
+        return {"technician": o.technician.vin}

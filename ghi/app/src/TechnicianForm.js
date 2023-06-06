@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 function TechnicianForm() {
     const [firstName, setFirst] = useState('');
-    const [secondName, setSecond] = useState('');
+    const [lastName, setLast] = useState('');
     const [employeeID, setEmployeeID] = useState('');
 
     const firstNameChange = (e) => {
@@ -11,9 +11,9 @@ function TechnicianForm() {
         setFirst(value)
     }
 
-    const secondNameChange = (e) => {
+    const lastNameChange = (e) => {
         const value = e.target.value;
-        setSecond(value)
+        setLast(value)
     }
 
     const employeeIDChange = (e) => {
@@ -27,7 +27,7 @@ function TechnicianForm() {
 
         const data = {};
         data.first_name = firstName;
-        data.last_name = secondName;
+        data.last_name = lastName;
         data.employee_id = employeeID;
         console.log(data);
 
@@ -45,7 +45,7 @@ function TechnicianForm() {
             console.log(newTechnician);
 
             setFirst('');
-            setSecond('');
+            setLast('');
             setEmployeeID('');
         }
     }
@@ -63,8 +63,8 @@ function TechnicianForm() {
                 <label htmlFor="first-name">First name</label>
               </div>
               <div className="form-floating mb-3">
-                <input value={secondName} onChange={secondNameChange} placeholder="Second name..." required type="text" name="second-name" id="second-name" className="form-control" />
-                <label htmlFor="second-name">Second name</label>
+                <input value={lastName} onChange={lastNameChange} placeholder="Last name..." required type="text" name="last-name" id="last-name" className="form-control" />
+                <label htmlFor="last-name">Last name</label>
               </div>
               <div className="form-floating mb-3">
                 <input value={employeeID} onChange={employeeIDChange} placeholder="Employee ID..." required type="text" name="employeeID" id="employeeID" className="form-control" />

@@ -2,38 +2,40 @@ import React, { useState, useEffect } from 'react';
 
 
 function TechnicianList() {
-    const [attendees, setAttendees] = useState()
+    const [technicians, setTechnicians] = useState()
 
-    const fetchAttendees = async () => {
-        const response = await fetch('http://localhost:8001/api/attendees/');
+    const fetchTechs = async () => {
+        const response = await fetch('http://localhost:8080/api/technicians/');
 
         if (response.ok) {
             const data = await response.json();
-            setAttendees(data.attendees);
+            setTechnicians(data.technicians);
         }
     }
 
     useEffect(() => {
-        fetchAttendees();
+        fetchTechs();
     }, [])
 
-    if (attendees === undefined) {
+    if (technicians === undefined) {
         return undefined
     }
     return (
         <table className="table table-striped">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Conference</th>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                 </tr>
             </thead>
             <tbody>
-            {attendees.map(attendee => {
+            {technicians.map(technician => {
                 return (
-                <tr key={attendee.href}>
-                    <td>{ attendee.name }</td>
-                    <td>{ attendee.conference }</td>
+                <tr key={ technician.id }>
+                    <td>{ technician.employee_id }</td>
+                    <td>{ technician.first_name }</td>
+                    <td>{ technician.last_name }</td>
                 </tr>
                 );
             })}

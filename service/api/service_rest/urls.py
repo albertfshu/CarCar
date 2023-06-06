@@ -5,6 +5,8 @@ from .views import (
     api_show_technician,
     api_list_appointments,
     api_show_appointments,
+    api_finish_appointment,
+    api_cancel_appointment,
 )
 
 
@@ -21,4 +23,14 @@ urlpatterns = [
         api_show_appointments,
         name="api_show_appointments",
     ),
+    path(
+        "appointments/<int:pk>/finish/",
+        api_finish_appointment,
+        name="api_finish_appointment",
+        ),
+    path(
+        "appointments/<int:pk>/cancel/",
+        api_cancel_appointment,
+        name="api_cancel_appointment",
+        ),
 ]

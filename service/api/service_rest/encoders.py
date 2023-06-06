@@ -1,5 +1,5 @@
 from common.json import ModelEncoder
-from .models import AutomobileVO, Technician, Appointment
+from .models import AutomobileVO, Technician, Appointment, Status
 
 
 class AutomobileVODetailEncoder(ModelEncoder):
@@ -7,7 +7,6 @@ class AutomobileVODetailEncoder(ModelEncoder):
     properties = [
         "vin",
         "sold",
-        "href",
     ]
 
 
@@ -21,12 +20,16 @@ class TechnicianListEncoder(ModelEncoder):
         ]
 
 
+class StatusEncoder(ModelEncoder):
+    model = Status
+    properties = ["name"]
+
+
 class AppointmentListEncoder(ModelEncoder):
     model = Appointment
     properties = [
         "date_time",
         "reason",
-        "status",
         "vin",
         "customer",
         "id",
@@ -34,7 +37,10 @@ class AppointmentListEncoder(ModelEncoder):
 
     encoders = {
         "technician": TechnicianListEncoder(),
-    }
+        }
 
     def get_extra_data(self, o):
-        return {"technician": f'{o.technician.first_name} {o.technician.last_name}'}
+        return {
+            "technician": f'{o.technician.first_name} {o.technician.last_name}',
+            "status": o.status.name
+            }

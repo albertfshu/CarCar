@@ -12,13 +12,7 @@ class AutomobileVODetailEncoder(ModelEncoder):
 
 class TechnicianListEncoder(ModelEncoder):
     model = Technician
-    properties = ["employee_id"]
-
-
-class TechnicianDetailEncoder(ModelEncoder):
-    model = Technician
     properties = [
-        "id",
         "first_name",
         "last_name",
         "employee_id",
@@ -36,8 +30,8 @@ class AppointmentListEncoder(ModelEncoder):
     ]
 
     encoders = {
-        "technician": TechnicianDetailEncoder(),
+        "technician": TechnicianListEncoder(),
     }
 
     def get_extra_data(self, o):
-        return {"technician": o.technician.vin}
+        return {"technician": f'{o.technician.first_name} {o.technician.last_name}'}

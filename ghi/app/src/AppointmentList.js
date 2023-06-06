@@ -2,38 +2,48 @@ import React, { useState, useEffect } from 'react';
 
 
 function AppointmentList() {
-    const [attendees, setAttendees] = useState()
+    const [appointments, setAppointments] = useState()
 
-    const fetchAttendees = async () => {
-        const response = await fetch('http://localhost:8001/api/attendees/');
+    const fetchAppointments = async () => {
+        const response = await fetch('http://localhost:8080/api/appointments/');
 
         if (response.ok) {
             const data = await response.json();
-            setAttendees(data.attendees);
+            setAppointments(data.appointments);
         }
     }
 
     useEffect(() => {
-        fetchAttendees();
+        fetchAppointments();
     }, [])
 
-    if (attendees === undefined) {
+    if (appointments === undefined) {
         return undefined
     }
     return (
         <table className="table table-striped">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Conference</th>
+                    <th>VIN</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Technician</th>
+                    <th>Reason</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-            {attendees.map(attendee => {
+            {appointments.map(appointment => {
                 return (
-                <tr key={attendee.href}>
-                    <td>{ attendee.name }</td>
-                    <td>{ attendee.conference }</td>
+                <tr key={appointment.id}>
+                    <td>{ appointment.name }</td>
+                    <td>{ appointment.vin }</td>
+                    <td>{ appointment.customer }</td>
+                    <td>{ appointment.date_time }</td>
+                    <td>{ appointment.date_time }</td>
+                    <td>{ appointment.technician }</td>
+                    <td>{ appointment.status }</td>
                 </tr>
                 );
             })}

@@ -10,12 +10,45 @@ function AppointmentList() {
         if (response.ok) {
             const data = await response.json();
             setAppointments(data.appointments);
+            for (let appointment in data.appointments){
+                console.log(appointment.date_time)
+
+            }
         }
     }
+
 
     useEffect(() => {
         fetchAppointments();
     }, [])
+
+    const onFinish = async (finishID) => {
+        const finishUrl = `http://localhost:8080/api/appointments/${finishID}/finish/`;
+        const fetchConfig = {
+            method: "put",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+        }
+        const response = await fetch(finishUrl, fetchConfig)
+        if(response.ok) {
+            fetchAppointments()
+        }
+    }
+
+    const onCancel = async (cancelID) => {
+        const cancelUrl = `http://localhost:8080/api/appointments/${cancelID}/cancel/`;
+        const fetchConfig = {
+            method: "put",
+            headers:{
+                'Content-Type': 'application/json',
+            },
+        }
+        const response = await fetch(cancelUrl, fetchConfig)
+        if(response.ok) {
+            fetchAppointments()
+        }
+    }
 
     if (appointments === undefined) {
         return undefined
@@ -37,13 +70,18 @@ function AppointmentList() {
             {appointments.map(appointment => {
                 return (
                 <tr key={appointment.id}>
-                    <td>{ appointment.name }</td>
                     <td>{ appointment.vin }</td>
                     <td>{ appointment.customer }</td>
                     <td>{ appointment.date_time }</td>
                     <td>{ appointment.date_time }</td>
                     <td>{ appointment.technician }</td>
-                    <td>{ appointment.status }</td>
+                    <td>{ appointment.reason }</td>
+                    <td>
+                        <button onClick={() => onFinish(appointment.id)} className="btn btn-primary">Finish</button>
+                    </td>
+                    <td>
+                        <button onClick={() => onCancel(appointment.id)} className="btn btn-danger">Cancel</button>
+                    </td>
                 </tr>
                 );
             })}

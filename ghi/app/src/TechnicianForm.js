@@ -31,7 +31,7 @@ function TechnicianForm() {
         data.employee_id = employeeID;
         console.log(data);
 
-        const TechnicianUrl = 'http://localhost:8080/api/technicians/';
+        const technicianUrl = 'http://localhost:8080/api/technicians/';
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -39,7 +39,7 @@ function TechnicianForm() {
                 'Content-Type': 'application/json',
             },
         };
-        const response =  await fetch(TechnicianUrl, fetchConfig);
+        const response =  await fetch(technicianUrl, fetchConfig);
         if (response.ok) {
             const newTechnician = await response.json();
             console.log(newTechnician);

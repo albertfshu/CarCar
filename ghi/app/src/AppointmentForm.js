@@ -2,62 +2,56 @@ import React, { useEffect, useState } from 'react';
 
 
 function AppointmentForm(){
-    const [locations, setLocations] = useState([]);
-    const [name, setName] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [description, setDescription] = useState('');
-    const [maxPresentations, setMaxPresentations] = useState('');
-    const [maxAttendees, setMaxAttendees] = useState('');
-    const [location, setLocation] = useState('');
+    const [technicians, setTechs] = useState([]);
+    const [vin, setVin] = useState('');
+    const [customer, setCustomer] = useState('');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
+    const [reason, setReason] = useState('');
+    const [technician, setTech] = useState('');
 
-    const handleNameChange = (event) => {
-        const value = event.target.value;
-        setName(value);
+    const vinChange = (e) => {
+        const value = e.target.value;
+        setVin(value);
     }
 
-    const handleStartChange = (event) => {
-        const value = event.target.value;
-        setStartDate(value);
+    const customerChange = (e) => {
+        const value = e.target.value;
+        setCustomer(value);
     }
 
-    const handleEndChange = (event) => {
-        const value = event.target.value;
-        setEndDate(value);
+    const dateChange = (e) => {
+        const value = e.target.value;
+        setDate(value);
     }
 
-    const handleDescriptionChange = (event) => {
-        const value = event.target.value;
-        setDescription(value);
+    const timeChange = (e) => {
+        const value = e.target.value;
+        setTime(value);
     }
 
-    const handleMaxPresentationsChange = (event) => {
-        const value = event.target.value;
-        setMaxPresentations(value);
+    const technicianChange = (e) => {
+        const value = e.target.value;
+        setTech(value);
     }
 
-    const handleMaxAttendeesChange = (event) => {
-        const value = event.target.value;
-        setMaxAttendees(value);
-    }
-    const handleLocationChange = (event) => {
-        const value = event.target.value;
-        setLocation(value);
+    const reasonChange = (e) => {
+        const value = e.target.value;
+        setReason(value);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const data = {};
-        data.name = name;
-        data.starts = startDate;
-        data.ends = endDate;
-        data.description = description;
-        data.max_presentations = maxPresentations;
-        data.max_attendees = maxAttendees;
-        data.location = location;
+        data.vin = vin;
+        data.customer = customer;
+        data.date_time = date;
+        data.date_time = time;
+        data.technician = technician;
+        data.reason = reason;
 
-        const conferencesUrl = 'http://localhost:8000/api/conferences/';
+        const appointmentUrl = 'http://localhost:8080/api/appointments/';
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),
@@ -65,30 +59,29 @@ function AppointmentForm(){
                 'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(conferencesUrl, fetchConfig);
+        const response = await fetch(appointmentUrl, fetchConfig);
         if (response.ok) {
-            const newConference = await response.json();
-            console.log(newConference);
+            const newAppointment = await response.json();
+            console.log(newAppointment);
 
-            setName('');
-            setStartDate('');
-            setEndDate('');
-            setDescription('');
-            setMaxPresentations('');
-            setMaxAttendees('');
-            setLocation('');
+            setVin('');
+            setCustomer('');
+            setDate('');
+            setTime('');
+            setReason('');
+            setTech('');
         }
     }
 
 
     const fetchData = async () => {
-        const url = 'http://localhost:8000/api/locations/';
+        const url = 'http://localhost:8080/api/technicians/';
 
         const response = await fetch(url);
 
         if (response.ok) {
             const data = await response.json();
-            setLocations(data.locations)
+            setTechs(data.technicians)
         }
     }
 
@@ -101,43 +94,39 @@ function AppointmentForm(){
     <div className="row">
     <div className="offset-3 col-6">
     <div className="shadow p-4 mt-4">
-        <h1>Create a new conference</h1>
-        <form onSubmit={handleSubmit} id="create-conference-form">
+        <h1>Create a service appointment</h1>
+        <form onSubmit={handleSubmit} id="create-appointment-form">
         <div className="form-floating mb-3">
-            <input value={name} onChange={handleNameChange} placeholder="Name" required type="text" name="name" id="name" className="form-control" />
-            <label htmlFor="name">Name</label>
+            <input value={vin} onChange={vinChange} placeholder="" required type="text" name="vin" id="vin" className="form-control" />
+            <label htmlFor="vin">Automobile VIN</label>
         </div>
         <div className="form-floating mb-3">
-            <input value={startDate} onChange={handleStartChange} placeholder="Starts" required type="date" name="starts" id="starts" className="form-control" />
-            <label htmlFor="starts">Starts</label>
+            <input value={customer} onChange={customerChange} placeholder="" required type="text" name="customer" id="customer" className="form-control" />
+            <label htmlFor="customer">Customer</label>
         </div>
         <div className="form-floating mb-3">
-            <input value={endDate} onChange={handleEndChange} placeholder="Ends" required type="date" name="ends" id="ends" className="form-control" />
-            <label htmlFor="city">Ends</label>
+            <input value={date} onChange={dateChange} placeholder="" required type="date" name="date" id="date" className="form-control" />
+            <label htmlFor="date">Date</label>
+        </div>
+        <div className="form-floating mb-3">
+            <input value={time} onChange={timeChange} placeholder="" required type="time" name="time" id="time" className="form-control" />
+            <label htmlFor="time">Time</label>
         </div>
         <div className="mb-3">
-            <label htmlFor="Description" className="form-label">Description</label>
-            <textarea value={description} onChange={handleDescriptionChange} className="form-control" name="description" id="description" rows="3"></textarea>
-        </div>
-        <div className="form-floating mb-3">
-            <input value={maxPresentations} onChange={handleMaxPresentationsChange} placeholder="max_presentations" required type="number" name="max_presentations" id="max_presentations" className="form-control" />
-            <label htmlFor="max_presentations">Maximum Presentations</label>
-        </div>
-        <div className="form-floating mb-3">
-            <input value={maxAttendees} onChange={handleMaxAttendeesChange} placeholder="max_attendees" required type="number" name="max_attendees" id="max_attendees" className="form-control" />
-            <label htmlFor="max_attendees">Maximum Attendees</label>
-        </div>
-        <div className="mb-3">
-            <select value={location} onChange={handleLocationChange} required id="location" name="location" className="form-select">
-            <option value="">Choose a location</option>
-            {locations.map(location => {
+            <select value={technician} onChange={technicianChange} required id="tech" name="tech" className="form-select">
+            <option value="">Choose a technician...</option>
+            {technicians.map(technician => {
                 return (
-                    <option key={ location.id } value = { location.id }>
-                        {location.name}
+                    <option key={ technician.id } value = { technician.id }>
+                        {technician.first_name}
                     </option>
                 );
             })}
             </select>
+        </div>
+        <div className="form-floating mb-3">
+            <input value={reason} onChange={reasonChange} placeholder="" required type="text" name="reason" id="reason" className="form-control" />
+            <label htmlFor="reason">Reason</label>
         </div>
         <button className="btn btn-primary">Create</button>
         </form>

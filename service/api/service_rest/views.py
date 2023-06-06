@@ -87,3 +87,36 @@ def api_list_appointments(request):
             encoder=AppointmentListEncoder,
             safe=False,
         )
+
+
+@require_http_methods(["DELETE", "GET", "PUT"])
+def api_show_appointments(request, pk):
+
+    if request.method == "GET":
+        appointment = Appointment.objects.get(id=pk)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentListEncoder,
+            safe=False,
+        )
+    elif request.method == "DELETE":
+        count, _ = Appointment.objects.filter(id=pk).delete()
+        return JsonResponse({"deleted": count > 0})
+    else:
+        content = json.loads(request.body)
+        try:
+            if "technician" in content:
+                technician = Technician.objects.get(employee_id=content["employee_id"])
+                content["employee_id"] = technician
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid employee id"},
+                status=404,
+            )
+        Appointment.objects.filter(id=pk).update(**content)
+        location = Appointment.objects.get(id=pk)
+        return JsonResponse(
+            location,
+            encoder=AppointmentListEncoder,
+            safe=False,
+        )

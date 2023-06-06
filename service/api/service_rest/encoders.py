@@ -7,6 +7,7 @@ class AutomobileVODetailEncoder(ModelEncoder):
     properties = [
         "vin",
         "sold",
+        "href",
     ]
 
 
@@ -16,6 +17,7 @@ class TechnicianListEncoder(ModelEncoder):
         "first_name",
         "last_name",
         "employee_id",
+        "id",
         ]
 
 
@@ -27,6 +29,7 @@ class AppointmentListEncoder(ModelEncoder):
         "status",
         "vin",
         "customer",
+        "id",
     ]
 
     encoders = {

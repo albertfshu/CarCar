@@ -10,13 +10,10 @@ function AppointmentList() {
         if (response.ok) {
             const data = await response.json();
             setAppointments(data.appointments);
-            for (let appointment in data.appointments){
-                console.log(appointment.date_time)
 
-            }
+
         }
     }
-
 
     useEffect(() => {
         fetchAppointments();
@@ -72,8 +69,8 @@ function AppointmentList() {
                 <tr key={appointment.id}>
                     <td>{ appointment.vin }</td>
                     <td>{ appointment.customer }</td>
-                    <td>{ appointment.date_time }</td>
-                    <td>{ appointment.date_time }</td>
+                    <td>{ new Date(appointment.date_time).toLocaleDateString() }</td>
+                    <td>{ new Date(appointment.date_time).toLocaleTimeString() }</td>
                     <td>{ appointment.technician }</td>
                     <td>{ appointment.reason }</td>
                     <td>

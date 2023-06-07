@@ -10,14 +10,15 @@ function AppointmentList() {
         if (response.ok) {
             const data = await response.json();
             setAppointments(data.appointments);
-
-
         }
     }
 
     useEffect(() => {
         fetchAppointments();
     }, [])
+
+    const isCreated = (appointments) => appointments.status === "created";
+
 
     const onFinish = async (finishID) => {
         const finishUrl = `http://localhost:8080/api/appointments/${finishID}/finish/`;
@@ -64,7 +65,7 @@ function AppointmentList() {
                 </tr>
             </thead>
             <tbody>
-            {appointments.map(appointment => {
+            {appointments.filter(isCreated).map(appointment => {
                 return (
                 <tr key={appointment.id}>
                     <td>{ appointment.vin }</td>

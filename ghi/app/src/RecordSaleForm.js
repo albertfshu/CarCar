@@ -64,8 +64,8 @@ function RecordSaleForm() {
     event.preventDefault();
     const data = {
       automobile: selectedAutomobile,
-      salesperson_id: selectedSalesperson,
-      customer_id: selectedCustomer,
+      salesperson: selectedSalesperson,
+      customer: selectedCustomer,
       price: price,
     };
 

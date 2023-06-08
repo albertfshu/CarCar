@@ -12,7 +12,13 @@ import TechnicianForm from './TechnicianForm';
 import AppointmentForm from './AppointmentForm';
 import AppointmentList from './AppointmentList';
 import ServiceHistory from './ServiceHistory';
-
+import AddSalesperson from './AddSalesperson';
+import SalespeopleList from './SalespeopleList';
+import CustomerList from './CustomerList';
+import RecordSaleForm from './RecordSaleForm';
+import SalesPage from './SalesPage';
+import SalespersonHistory from './SalespersonHistory'
+import AddCustomer from './AddCustomer';
 
 function App() {
   return (
@@ -27,12 +33,18 @@ function App() {
           <Route path="models/create" element={<VehicleModelForm />} />
           <Route path="/automobiles" element={<AutomobilesList />} />
           <Route path="automobiles/create" element={<AutomobileForm />} />
-          <Route path="services" />
           <Route path="technicians/create" element={<TechnicianForm />} />
           <Route path="/technicians" element={<TechnicianList />} />
           <Route path="appointments/create" element={<AppointmentForm />} />
           <Route path="/appointments" element={<AppointmentList />} />
           <Route path="appointments/history" element={<ServiceHistory />} />
+          <Route path="salespeople/create" element={<AddSalesperson />} />
+          <Route path="salespeople" element={<SalespeopleList />} />
+          <Route path="customers/create" element={<AddCustomer />} />
+          <Route path="customers" element={<CustomerList />} />
+          <Route path="sales/create" element={<RecordSaleForm />} />
+          <Route path="sales/" element={<SalesPage />} />
+          <Route path="sales/history" element={<SalespersonHistory />} />
         </Routes>
       </div>
     </BrowserRouter>

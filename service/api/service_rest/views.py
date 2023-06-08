@@ -109,48 +109,19 @@ def api_list_appointments(request):
                 {"message": "Invalid technician"},
                 status=404,
             )
-        # try:
-        #     automobiles = AutomobileVO.objects.all()
-        #     for automobile in automobiles:
-        #         if automobile == content["vin"]:
-        #             if automobile.sold is True:
-        #                 content.update({"vip": True})
-        #             else:
-        #                 content.update({"vip": False})
-        # except AutomobileVO.DoesNotExist:
-        #     return JsonResponse(
-        #         {"message": "Invalid automobile"},
-        #         status=404,
-        #     )
-        # except AutomobileVO.DoesNotExist:
+
         appointment = Appointment.objects.create(**content)
         return JsonResponse(
             appointment,
             encoder=AppointmentListEncoder,
             safe=False,
         )
-    # else:
-    #     content = json.loads(request.body)
-    #     try:
-    #         sold = AutomobileVO.objects.get(sold=content["sold"])
-    #         content["sold"] = sold
-    #     except AutomobileVO.DoesNotExist:
-    #         return JsonResponse(
-    #             {"message": "Invalid automobile"},
-    #             status=404,
-    #         )
-    #     sold = AutomobileVO.objects.create(**content)
-    #     return JsonResponse(
-    #         sold,
-    #         encoder=AutomobileVODetailEncoder,
-    #         safe=False,
-    #     )
 
 
 @require_http_methods(["DELETE", "GET", "PUT"])
 def api_show_appointments(request, pk):
     try:
-        appointment = Appointment.objects.all()
+        appointment = Appointment.objects.filter(id=pk)
     except Appointment.DoesNotExist:
         return JsonResponse(
             {"message": "Invalid appointment"},
@@ -158,9 +129,8 @@ def api_show_appointments(request, pk):
         )
     if request.method == "GET":
         return JsonResponse(
-            appointment,
+            {"appointments": appointment},
             encoder=AppointmentListEncoder,
-            safe=False,
         )
     elif request.method == "DELETE":
         count, _ = Appointment.objects.filter(id=pk).delete()

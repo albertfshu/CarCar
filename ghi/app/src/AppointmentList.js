@@ -19,7 +19,6 @@ function AppointmentList() {
 
     const isCreated = (appointments) => appointments.status === "created";
 
-
     const onFinish = async (finishID) => {
         const finishUrl = `http://localhost:8080/api/appointments/${finishID}/finish/`;
         const fetchConfig = {

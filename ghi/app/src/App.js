@@ -15,8 +15,8 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/technicians/" element={<TechnicianList />} />
           <Route path="technicians/create" element={<TechnicianForm />} />
+          <Route path="/technicians" element={<TechnicianList />} />
           <Route path="appointments/create" element={<AppointmentForm />} />
           <Route path="/appointments" element={<AppointmentList />} />
           <Route path="appointments/history" element={<ServiceHistory />} />

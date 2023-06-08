@@ -11,6 +11,9 @@ function Nav() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
+                <NavLink to="/manufacturers/" className="nav-link" aria-current="page">Manufacturers</NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/technicians/" className="nav-link" aria-current="page">Technicians</NavLink>
               </li>
               <li className="nav-item">

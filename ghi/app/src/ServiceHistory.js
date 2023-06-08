@@ -58,8 +58,8 @@ function ServiceHistory() {
     }
     return (
         <>
-        <form id="create-search-bar">
         <h1>Service History</h1>
+        <form id="create-search-bar">
             <label htmlFor="header-search">
                 <span className="visually-hidden"></span>
             </label>

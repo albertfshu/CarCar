@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
+import ManufacturersList from './ManufacturersList';
 import TechnicianList from './TechniciansList';
 import TechnicianForm from './TechnicianForm';
 import AppointmentForm from './AppointmentForm';
@@ -15,6 +16,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/manufacturers" element={<ManufacturersList />} />
           <Route path="technicians/create" element={<TechnicianForm />} />
           <Route path="/technicians" element={<TechnicianList />} />
           <Route path="appointments/create" element={<AppointmentForm />} />

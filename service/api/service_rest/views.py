@@ -15,34 +15,40 @@ from .models import AutomobileVO, Technician, Appointment, Status
 @require_http_methods(["GET", "POST"])
 def api_list_technicians(request):
     if request.method == "GET":
-        technicians = Technician.objects.all()
+        try:
+            technicians = Technician.objects.all()
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid technician id"},
+                status=404,
+            )
         return JsonResponse(
             {"technicians": technicians},
             encoder=TechnicianListEncoder,
         )
-    elif request.method == "POST":
+
+    else:
         content = json.loads(request.body)
-        technician = Technician.objects.create(
-            first_name=content["first_name"],
-            last_name=content["last_name"],
-            employee_id=content["employee_id"]
-        )
+
+        technician = Technician.objects.create(**content)
         return JsonResponse(
             technician,
             encoder=TechnicianListEncoder,
             safe=False,
         )
-    else:
-        return JsonResponse(
-            {"message": "Invalid request"},
-            status=404,
-        )
+
 
 
 @require_http_methods(["GET", "DELETE", "PUT"])
 def api_show_technician(request, pk):
     if request.method == "GET":
-        technician = Technician.objects.get(id=pk)
+        try:
+            technician = Technician.objects.get(id=pk)
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid Technician id"},
+                status=404,
+            )
         return JsonResponse(
             technician,
             encoder=TechnicianListEncoder,
@@ -50,7 +56,13 @@ def api_show_technician(request, pk):
         )
     elif request.method == "DELETE":
         count, _ = Technician.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
+        if (count > 0) is False:
+            return JsonResponse(
+                {"message": "Invalid technician id"},
+                status=404,
+            )
+        else:
+            return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
         Technician.objects.filter(id=pk).update(**content)
@@ -64,8 +76,15 @@ def api_show_technician(request, pk):
 
 @require_http_methods(["PUT"])
 def api_finish_appointment(request, pk):
-    appointment = Appointment.objects.get(id=pk)
-    appointment.finish()
+    try:
+        appointment = Appointment.objects.get(id=pk)
+        appointment.finish()
+    except Appointment.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid appointment id"},
+            status=404
+        )
+
     return JsonResponse(
         appointment,
         encoder=AppointmentListEncoder,
@@ -75,8 +94,15 @@ def api_finish_appointment(request, pk):
 
 @require_http_methods(["PUT"])
 def api_cancel_appointment(request, pk):
-    appointment = Appointment.objects.get(id=pk)
-    appointment.cancel()
+    try:
+        appointment = Appointment.objects.get(id=pk)
+        appointment.cancel()
+    except Appointment.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid appointment id"},
+            status=404
+        )
+
     return JsonResponse(
         appointment,
         encoder=AppointmentListEncoder,
@@ -90,7 +116,7 @@ def api_list_appointments(request):
         appointment = Appointment.objects.all()
     except Appointment.DoesNotExist:
         return JsonResponse(
-            {"message": "Invalid appointment"},
+            {"message": "Invalid value"},
             status=404,
         )
 
@@ -134,7 +160,13 @@ def api_show_appointments(request, pk):
         )
     elif request.method == "DELETE":
         count, _ = Appointment.objects.filter(id=pk).delete()
-        return JsonResponse({"deleted": count > 0})
+        if (count > 0) is False:
+            return JsonResponse(
+                {"message": "Invalid appointment id"},
+                status=404,
+            )
+        else:
+            return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
         try:

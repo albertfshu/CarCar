@@ -36,22 +36,22 @@ function ServiceHistory() {
             setVip(autoVintoSold)
         }
 
-    }
+    };
 
 
     useEffect(() => {
         fetchAutomobiles();
-    }, [])
+    }, []);
 
     const vinChange = (e) => {
         const value = e.target.value;
         setVin(value);
-    }
+    };
 
     const inputChange = () => {
         const filteredInput = appointments.filter((appointment) => appointment.vin.toLowerCase().includes(vin.toLowerCase()))
         setSearchedAppointment(filteredInput)
-    }
+    };
 
     if (appointments === undefined) {
         return undefined

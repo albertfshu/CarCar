@@ -22,7 +22,9 @@ function ManufacturersList() {
         <h1>Manufacturers</h1>
         <table className="table table-striped">
             <thead>
-                <th>Name</th>
+                <tr>
+                    <th>Name</th>
+                </tr>
             </thead>
             <tbody>
             {manufacturers.map(manufacturer => {

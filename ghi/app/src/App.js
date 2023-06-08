@@ -3,11 +3,11 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import AddSalesperson from './AddSalesperson';
 import SalespeopleList from './SalespeopleList';
-import AddCustomer from './AddCustomer'
 import CustomerList from './CustomerList';
 import RecordSaleForm from './RecordSaleForm';
 import SalesPage from './SalesPage';
 import SalespersonHistory from './SalespersonHistory'
+import AddCustomer from './AddCustomer';
 
 function App() {
   return (

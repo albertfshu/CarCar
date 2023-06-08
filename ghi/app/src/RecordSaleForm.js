@@ -113,10 +113,6 @@ function RecordSaleForm() {
     }
   };
 
-  console.log(automobiles);
-  console.log(salespersons);
-  console.log(customers);
-
   return (
     <>
       <div className="row">
@@ -126,8 +122,6 @@ function RecordSaleForm() {
             <form onSubmit={handleSubmit} id="record-sale-form">
               <div className="mb-3">
                 <div className="form-floating mb-3">
-
-
                 <select value={selectedAutomobile} onChange={handleAutomobileChange} className="form-select">
                     <option value="">Choose an Automobile</option>
                     {automobiles.map((automobile) => {
@@ -141,19 +135,8 @@ function RecordSaleForm() {
                         return null;
                     })}
                     </select>
-
-{/*
-                  <select value={selectedAutomobile} onChange={handleAutomobileChange} className="form-select">
-                    <option value="">Choose an Automobile</option>
-                    {automobiles.map((automobile) => (
-                      <option key={automobile.id} value={automobile.vin}>
-                        {automobile.vin}
-                      </option>
-                    ))}
-                  </select> */}
                   <label htmlFor="automobile">Automobile</label>
                 </div>
-
                 <div className="form-floating mb-3">
                   <select value={selectedSalesperson} onChange={handleSalespersonChange} className="form-select">
                     <option value="">Choose a Salesperson</option>
@@ -165,7 +148,6 @@ function RecordSaleForm() {
                   </select>
                   <label htmlFor="salesperson">Salesperson</label>
                 </div>
-
                 <div className="form-floating mb-3">
                   <select value={selectedCustomer} onChange={handleCustomerChange} className="form-select">
                     <option value="">Choose a Customer</option>
@@ -177,12 +159,10 @@ function RecordSaleForm() {
                   </select>
                   <label htmlFor="customer">Customer</label>
                 </div>
-
                 <div className="form-floating mb-3">
                   <input onChange={handlePriceChange} placeholder="Price" required type="number" name="price" id="price" className="form-control" value={price} />
                   <label htmlFor="price">Price</label>
                 </div>
-
                 <button type="submit" className="btn btn-primary">Record Sale</button>
               </div>
             </form>

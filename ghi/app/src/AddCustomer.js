@@ -81,7 +81,7 @@ function AddCustomer() {
                   <input onChange={handlePhoneNumberChange} placeholder="Phone Number" value={phoneNumber} required type="text" className="form-control"/>
                   <label htmlFor="phone_number">Phone Number...</label>
                 </div>
-              <button type="submit">Create</button>
+              <button type="submit">Create a Customer</button>
             </form>
           </div>
         </div>

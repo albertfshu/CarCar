@@ -14,25 +14,25 @@ function Nav() {
               <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/salespeople">Salespeople</NavLink>
+              <NavLink className="nav-link" to="/salespeople/">Salespeople</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/salespeople/create">Add a Salespeople</NavLink>
+              <NavLink className="nav-link" to="/salespeople/create/">Add a Salespeople</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/customers">Customers</NavLink>
+              <NavLink className="nav-link" to="/customers/">Customers</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/customers/create">Add a Customers</NavLink>
+              <NavLink className="nav-link" to="/customers/create/">Add a Customers</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/sales">Sales</NavLink>
+              <NavLink className="nav-link" to="/sales/">Sales</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/sales/create">Add a sale</NavLink>
+              <NavLink className="nav-link" to="/sales/create/">Add a sale</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/sales/history">Salesperson History</NavLink>
+              <NavLink className="nav-link" to="/sales/history/">Salesperson History</NavLink>
             </li>
           </ul>
         </div>

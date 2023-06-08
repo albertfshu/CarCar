@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from .models import Salesperson, AutomobileVO, Customer, Sale
 import json
 from django.http import JsonResponse
@@ -12,7 +12,6 @@ from .encoders import (
     SaleDetailEncoder,
     AutomobileVOListEncoder
 )
-
 
 
 @require_http_methods(["GET", "POST"])
@@ -56,7 +55,6 @@ def api_show_salespeople(request, id):
         return JsonResponse(
             salespeople, encoder=SalespersonDetailEncoder, safe=False
         )
-
 
 
 @require_http_methods(["GET", "POST"])

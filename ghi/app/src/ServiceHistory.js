@@ -5,7 +5,6 @@ function ServiceHistory() {
     const [appointments, setAppointments] = useState([])
     const [vin, setVin] = useState('');
     const [vip, setVip] = useState('');
-    const [vinMap, setVinMap] = useState('');
     const [searchedAppointments, setSearchedAppointment] = useState([]);
 
     useEffect(() => {
@@ -27,14 +26,14 @@ function ServiceHistory() {
 
     const fetchAutomobiles = async () => {
         const response = await fetch('http://localhost:8100/api/automobiles/');
-        const autoMap = {}
+        const autoVintoSold = {}
         if (response.ok) {
             const data = await response.json();
             for (let automobiles of data.autos) {
                 const autoVin = automobiles.vin
-                autoMap[autoVin] = automobiles.sold
+                autoVintoSold[autoVin] = automobiles.sold
             }
-            setVinMap(autoMap)
+            setVip(autoVintoSold)
         }
 
     }
@@ -87,7 +86,7 @@ function ServiceHistory() {
                 return (
                     <tr key={appointment.id}>
                     <td>{ appointment.vin }</td>
-                    <td>{ vinMap[appointment.vin] ? "yes" : "no" }</td>
+                    <td>{ vip[appointment.vin] ? "yes" : "no" }</td>
                     <td>{ appointment.customer }</td>
                     <td>{ new Date(appointment.date_time).toLocaleDateString() }</td>
                     <td>{ new Date(appointment.date_time).toLocaleTimeString() }</td>

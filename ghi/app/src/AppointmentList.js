@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 function AppointmentList() {
     const [appointments, setAppointments] = useState()
+    const [vip, setVip] = useState('');
 
     const fetchAppointments = async () => {
         const response = await fetch('http://localhost:8080/api/appointments/');
@@ -16,6 +17,21 @@ function AppointmentList() {
     useEffect(() => {
         fetchAppointments();
     }, [])
+
+    const fetchAutomobiles = async () => {
+        const response = await fetch('http://localhost:8100/api/automobiles/');
+        const autoVintoSold = {}
+        if (response.ok) {
+            const data = await response.json();
+            for (let automobiles of data.autos) {
+                const autoVin = automobiles.vin
+                autoVintoSold[autoVin] = automobiles.sold
+            }
+            setVip(autoVintoSold)
+        }
+
+    }
+
 
     const isCreated = (appointments) => appointments.status === "created";
 
@@ -55,6 +71,7 @@ function AppointmentList() {
             <thead>
                 <tr>
                     <th>VIN</th>
+                    <th>Is Vip?</th>
                     <th>Customer</th>
                     <th>Date</th>
                     <th>Time</th>
@@ -68,6 +85,7 @@ function AppointmentList() {
                 return (
                 <tr key={appointment.id}>
                     <td>{ appointment.vin }</td>
+                    <td>{ vip[appointment.vin] ? "yes" : "no" }</td>
                     <td>{ appointment.customer }</td>
                     <td>{ new Date(appointment.date_time).toLocaleDateString() }</td>
                     <td>{ new Date(appointment.date_time).toLocaleTimeString() }</td>

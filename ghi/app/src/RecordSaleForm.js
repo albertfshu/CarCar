@@ -87,6 +87,26 @@ function RecordSaleForm() {
         setSelectedSalesperson('');
         setSelectedCustomer('');
         setPrice('');
+
+        const updateUrl = `http://localhost:8100/api/automobiles/${selectedAutomobile}/`
+        const updateData = {
+            sold: true,
+        }
+
+        const updateFetchConfig = {
+            method: "PUT",
+            body: JSON.stringify(updateData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const updateResponse = await fetch(updateUrl, updateFetchConfig);
+        if (updateResponse.ok) {
+            console.log('Automobile status updated successfully')
+        } else {
+            console.log('Failed to update automobile status')
+        }
       }
     } catch (error) {
       console.log('Error', error);
@@ -106,6 +126,23 @@ function RecordSaleForm() {
             <form onSubmit={handleSubmit} id="record-sale-form">
               <div className="mb-3">
                 <div className="form-floating mb-3">
+
+
+                <select value={selectedAutomobile} onChange={handleAutomobileChange} className="form-select">
+                    <option value="">Choose an Automobile</option>
+                    {automobiles.map((automobile) => {
+                        if (!automobile.sold) {
+                        return (
+                            <option key={automobile.id} value={automobile.vin}>
+                            {automobile.vin}
+                            </option>
+                        );
+                        }
+                        return null;
+                    })}
+                    </select>
+
+{/*
                   <select value={selectedAutomobile} onChange={handleAutomobileChange} className="form-select">
                     <option value="">Choose an Automobile</option>
                     {automobiles.map((automobile) => (
@@ -113,7 +150,7 @@ function RecordSaleForm() {
                         {automobile.vin}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                   <label htmlFor="automobile">Automobile</label>
                 </div>
 

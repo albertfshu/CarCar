@@ -77,7 +77,6 @@ function AppointmentList() {
                     <th>Time</th>
                     <th>Technician</th>
                     <th>Reason</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>

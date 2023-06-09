@@ -3,13 +3,12 @@ from django.views.decorators.http import require_http_methods
 import json
 
 from .encoders import (
-    AutomobileVODetailEncoder,
     TechnicianListEncoder,
     AppointmentListEncoder,
     )
 
 
-from .models import AutomobileVO, Technician, Appointment
+from .models import Technician, Appointment
 
 
 @require_http_methods(["GET", "POST"])
@@ -75,8 +74,6 @@ def api_show_technician(request, pk):
         )
 
 
-
-
 @require_http_methods(["GET", "POST"])
 def api_list_appointments(request):
     try:
@@ -135,7 +132,6 @@ def api_show_appointments(request, pk):
             return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-
 
         Appointment.objects.filter(id=pk).update(**content)
         appointment = Appointment.objects.get(id=pk)

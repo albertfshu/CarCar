@@ -9,7 +9,7 @@ from .encoders import (
     )
 
 
-from .models import AutomobileVO, Technician, Appointment, Status
+from .models import AutomobileVO, Technician, Appointment
 
 
 @require_http_methods(["GET", "POST"])
@@ -74,42 +74,6 @@ def api_show_technician(request, pk):
         )
 
 
-@require_http_methods(["PUT"])
-def api_finish_appointment(request, pk):
-    try:
-        appointment = Appointment.objects.get(id=pk)
-        appointment.finish()
-    except Appointment.DoesNotExist:
-        return JsonResponse(
-            {"message": "Invalid appointment id"},
-            status=404
-        )
-
-    return JsonResponse(
-        appointment,
-        encoder=AppointmentListEncoder,
-        safe=False,
-    )
-
-
-@require_http_methods(["PUT"])
-def api_cancel_appointment(request, pk):
-    try:
-        appointment = Appointment.objects.get(id=pk)
-        appointment.cancel()
-    except Appointment.DoesNotExist:
-        return JsonResponse(
-            {"message": "Invalid appointment id"},
-            status=404
-        )
-
-    return JsonResponse(
-        appointment,
-        encoder=AppointmentListEncoder,
-        safe=False,
-    )
-
-
 @require_http_methods(["GET", "POST"])
 def api_list_appointments(request):
     try:
@@ -168,15 +132,7 @@ def api_show_appointments(request, pk):
             return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        try:
-            if "status" in content:
-                status = Status.objects.get(employee_id=content["status"])
-                content["status"] = status
-        except Status.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid status"},
-                status=404,
-            )
+
         Appointment.objects.filter(id=pk).update(**content)
         appointment = Appointment.objects.get(id=pk)
         return JsonResponse(
@@ -184,3 +140,39 @@ def api_show_appointments(request, pk):
             encoder=AppointmentListEncoder,
             safe=False,
         )
+
+
+@require_http_methods(["PUT"])
+def api_finish_appointment(request, pk):
+    try:
+        appointment = Appointment.objects.get(id=pk)
+        appointment.finish()
+    except Appointment.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid appointment id"},
+            status=404
+        )
+
+    return JsonResponse(
+        appointment,
+        encoder=AppointmentListEncoder,
+        safe=False,
+    )
+
+
+@require_http_methods(["PUT"])
+def api_cancel_appointment(request, pk):
+    try:
+        appointment = Appointment.objects.get(id=pk)
+        appointment.cancel()
+    except Appointment.DoesNotExist:
+        return JsonResponse(
+            {"message": "Invalid appointment id"},
+            status=404
+        )
+
+    return JsonResponse(
+        appointment,
+        encoder=AppointmentListEncoder,
+        safe=False,
+    )

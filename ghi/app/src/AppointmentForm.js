@@ -49,8 +49,7 @@ function AppointmentForm(){
         data.date_time = `${date} ${time}`;
         data.technician = technician;
         data.reason = reason;
-        data.status_id=1;
-        console.log(data.status)
+        console.log(data)
 
         const appointmentUrl = 'http://localhost:8080/api/appointments/';
         const fetchConfig = {

@@ -136,6 +136,7 @@ def api_show_appointments(request, pk):
     else:
         content = json.loads(request.body)
 
+
         Appointment.objects.filter(id=pk).update(**content)
         appointment = Appointment.objects.get(id=pk)
         return JsonResponse(

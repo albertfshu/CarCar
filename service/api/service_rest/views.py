@@ -102,7 +102,6 @@ def api_list_appointments(request):
                 {"message": "Invalid technician"},
                 status=404,
             )
-
         appointment = Appointment.objects.create(**content)
         return JsonResponse(
             appointment,

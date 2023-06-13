@@ -65,8 +65,15 @@ def api_show_technician(request, pk):
             return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        Technician.objects.filter(id=pk).update(**content)
-        technician = Technician.objects.get(id=pk)
+
+        try:
+            Technician.objects.filter(id=pk).update(**content)
+            technician = Technician.objects.get(id=pk)
+        except Technician.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid Technician id"},
+                status=404,
+            )
         return JsonResponse(
             technician,
             encoder=TechnicianListEncoder,

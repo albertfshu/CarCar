@@ -53,6 +53,13 @@ function ServiceHistory() {
         setSearchedAppointment(filteredInput)
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault()
+            inputChange()
+        }
+    };
+
     if (appointments === undefined) {
         return undefined
     }
@@ -64,7 +71,7 @@ function ServiceHistory() {
                 <span className="visually-hidden"></span>
             </label>
             <div className="input-group">
-            <input onChange={vinChange} placeholder="Search by VIN..." required type="search" name="vin" id="vin" aria-describedby="search-addon" className="form-control rounded" />
+            <input onChange={vinChange} onKeyDown={handleKeyDown} placeholder="Search by VIN..." required type="search" name="vin" id="vin" aria-describedby="search-addon" className="form-control rounded" />
             <label htmlFor="vin"></label>
             <button onClick={inputChange} type="button" className="btn btn-outline-primary">Search</button>
             </div>

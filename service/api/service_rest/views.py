@@ -13,14 +13,7 @@ from .models import Technician, Appointment
 
 @require_http_methods(["GET", "POST"])
 def api_list_technicians(request):
-    try:
-        technicians = Technician.objects.all()
-    except Technician.DoesNotExist:
-        return JsonResponse(
-            {"message": "Invalid technician id"},
-            status=404,
-        )
-
+    technicians = Technician.objects.all()
     if request.method == "GET":
         return JsonResponse(
             {"technicians": technicians},
@@ -36,7 +29,6 @@ def api_list_technicians(request):
             encoder=TechnicianListEncoder,
             safe=False,
         )
-
 
 
 @require_http_methods(["GET", "DELETE", "PUT"])
@@ -83,14 +75,7 @@ def api_show_technician(request, pk):
 
 @require_http_methods(["GET", "POST"])
 def api_list_appointments(request):
-    try:
-        appointment = Appointment.objects.all()
-    except Appointment.DoesNotExist:
-        return JsonResponse(
-            {"message": "Invalid value"},
-            status=404,
-        )
-
+    appointment = Appointment.objects.all()
     if request.method == "GET":
         return JsonResponse(
             {"appointments": appointment},
@@ -139,9 +124,15 @@ def api_show_appointments(request, pk):
             return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
+        try:
+            appointment = Appointment.objects.get(id=pk)
+        except Appointment.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid appointment"},
+                status=404,
+            )
 
         Appointment.objects.filter(id=pk).update(**content)
-        appointment = Appointment.objects.get(id=pk)
         return JsonResponse(
             appointment,
             encoder=AppointmentListEncoder,
